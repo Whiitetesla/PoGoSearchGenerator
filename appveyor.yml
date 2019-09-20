@@ -1,0 +1,54 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+environment:
+  nodejs_version: 10
+install:
+- ps: Install-Product node $env:nodejs_version
+- node --version
+- npm --version
+- npm install newman
+before_build:
+- ps: dotnet restore --verbosity m
+- ps: nuget restore
+build:
+  verbosity: minimal
+after_build:
+- cmd: dotnet publish -c Release
+test_script:
+  - dotnet test "C:\projects\pogosearchgeneratorapi\PoGoSearchGenerator.xUnitTest\PoGoSearchGenerator.xUnitTest.csproj" --configuration Debug --no-build
+  - ps: cd PoGoSearchGeneratorApi
+  - ps: $ServerProcess = Start-Process dotnet -ArgumentList "run","--urls=http://localhost:44396/" -PassThru
+  - ps: cd ../
+  - node_modules/.bin/newman run PoGoSearchGenerator.PostmanTest/PoGoSearchGeneratorApi.postman_collection.json
+  - cd ../
+artifacts:
+- path: '\PoGoSearchGeneratorApi\bin\Release\netcoreapp2.1\publish'
+  name: WebSite
+  type: WebDeployPackage
+deploy:
+- provider: WebDeploy
+  server: https://pogosearchgeneratorapi.scm.azurewebsites.net:443/msdeploy.axd?site=PoGoSearchGeneratorApi
+  website: PoGoSearchGeneratorApi
+  username: $PoGoSearchGeneratorApi
+  password:
+    secure: Zu4FuBNPzy+Vi99K6T5y7koDzHVLyT0yCy9k3M3hLds8WbG4gzXZMn8jT83Oz8Fxyk42k/buvD/8AU849gXYNw==
+  artifact: WebSite
+  aspnet_core: true
+  app_offline: true
+  aspnet_core_force_restart: true
+  on:
+    branch: master
+- provider: WebDeploy
+  server: https://pogosearchgeneratorapistaging.scm.azurewebsites.net:443/msdeploy.axd?site=PoGoSearchGeneratorApiStaging
+  website: PoGoSearchGeneratorApiStaging
+  username: $PoGoSearchGeneratorApiStaging
+  password:
+    secure: dI98PTMrym6f3T93BDLBtyjkNFhMKfHFKDylIrp65sLrH2s8MXUaW4lW6fFuG8dYDrNmisNVXjf2cxLWiNRA1w==
+  artifact: WebSite
+  aspnet_core: true
+  app_offline: true
+  aspnet_core_force_restart: true
+  on:
+    branch: development
+on_finish:
+  - ps: $ServerProcess.closeMainWindow()
