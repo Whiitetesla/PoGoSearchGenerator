@@ -1,0 +1,23 @@
+version: 1.0.{build}
+image: Visual Studio 2017
+environment:
+  nodejs_version: 10
+install:
+- ps: Install-Product node $env:nodejs_version
+- node --version
+- npm --version
+- npm install newman
+before_build:
+- ps: dotnet restore --verbosity m
+- ps: nuget restore
+build:
+  verbosity: minimal
+after_build:
+- cmd: dotnet publish -c Release
+test_script:
+  - dotnet test "C:\projects\pogotypeapi\POGOtype.Test\POGOtype.Test.csproj" --configuration Debug --no-build
+  - ps: cd POGOtypeApi
+  - ps: $ServerProcess = Start-Process dotnet -ArgumentList "run","--urls=http://localhost:44396/" -PassThru
+  - ps: cd ../
+on_finish:
+  - ps: $ServerProcess.closeMainWindow()

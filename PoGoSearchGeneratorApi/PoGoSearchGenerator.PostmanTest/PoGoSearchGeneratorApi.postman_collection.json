@@ -1,0 +1,44 @@
+{
+	"info": {
+		"_postman_id": "251c815b-1fdf-4b0a-af7e-1b920197c518",
+		"name": "PoGoSearchGeneratorApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "https://localhost:44396/api/values",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "56a3366f-a5df-4cd6-9cc1-62af2e738851",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:44396/api/values",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "44396",
+					"path": [
+						"api",
+						"values"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
