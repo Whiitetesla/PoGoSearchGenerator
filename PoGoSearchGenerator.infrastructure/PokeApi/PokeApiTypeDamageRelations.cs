@@ -21,6 +21,9 @@ namespace PoGoSearchGenerator.infrastructure.PokeApi
         
         public async System.Threading.Tasks.Task GatherGetDamageRelation(string type)
         {
+            if (!_context.Set<Types>().Any())
+                await new PokeApiTypeGather(_context).GatherTypeListAsync();
+
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync($"https://pokeapi.co/api/v2/type/{type}");
             if (response.IsSuccessStatusCode)
@@ -35,25 +38,45 @@ namespace PoGoSearchGenerator.infrastructure.PokeApi
                 };
 
                 //moves all the lists to our new damageRelation
-                foreach (var obj in model.Damage_relations.Double_damage_from)
-                {
-                    damageRelation.Double_damage_from.Add(obj.Name);
-                }
+                damageRelation.Double_damage_from = 
+                        _context.Set<Types>()
+                        .Where(x =>
+                            model.Damage_relations.Double_damage_from
+                            .Contains(new PokeApiTypeResultDto()
+                            {
+                                Name = x.Name
+                            }))
+                        .ToList();
 
-                foreach (var obj in model.Damage_relations.Double_damage_to)
-                {
-                    damageRelation.Double_damage_to.Add(obj.Name);
-                }
+                damageRelation.Double_damage_to =
+                        _context.Set<Types>()
+                        .Where(x =>
+                            model.Damage_relations.Double_damage_to
+                            .Contains(new PokeApiTypeResultDto()
+                            {
+                                Name = x.Name
+                            }))
+                        .ToList();
 
-                foreach (var obj in model.Damage_relations.Half_damage_from)
-                {
-                    damageRelation.Half_damage_from.Add(obj.Name);
-                }
+                damageRelation.Half_damage_from =
+                        _context.Set<Types>()
+                        .Where(x =>
+                            model.Damage_relations.Half_damage_from
+                            .Contains(new PokeApiTypeResultDto()
+                            {
+                                Name = x.Name
+                            }))
+                        .ToList();
 
-                foreach (var obj in model.Damage_relations.No_damage_from)
-                {
-                    damageRelation.No_damage_from.Add(obj.Name);
-                }
+                damageRelation.No_damage_from =
+                        _context.Set<Types>()
+                        .Where(x =>
+                            model.Damage_relations.No_damage_from
+                            .Contains(new PokeApiTypeResultDto()
+                            {
+                                Name = x.Name
+                            }))
+                        .ToList();
 
                 _context.Set<DamageRelation>().Add(damageRelation);
 

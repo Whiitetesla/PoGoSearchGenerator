@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace PoGoSearchGenerator.Application.Commands.Type
 {
-    public class GetTypesCommand : IRequest<List<Types>>
+    public class GetTypesCommand : IRequest<List<string>>
     {
     }
 
     public class GetTypesCommandHandler
-        : IRequestHandler<GetTypesCommand, List<Types>>
+        : IRequestHandler<GetTypesCommand, List<string>>
     {
         private readonly ApplicationDbContext _context;
 
@@ -25,12 +25,12 @@ namespace PoGoSearchGenerator.Application.Commands.Type
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<List<Types>> Handle(GetTypesCommand request, CancellationToken cancellationToken)
+        public async Task<List<string>> Handle(GetTypesCommand request, CancellationToken cancellationToken)
         {
             if (!_context.Set<Types>().Any())
                 await new PokeApiTypeGather(_context).GatherTypeListAsync();
 
-            return _context.Set<Types>().ToList();
+            return _context.Set<Types>().Select(x => x.Name).ToList();
         }
     }
 }

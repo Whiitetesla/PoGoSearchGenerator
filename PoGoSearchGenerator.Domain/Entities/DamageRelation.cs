@@ -6,6 +6,9 @@ namespace PoGoSearchGenerator.Domain.Entities
 {
     public class DamageRelation
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public int Id { get; set; }
 
         /// <summary>
@@ -16,21 +19,21 @@ namespace PoGoSearchGenerator.Domain.Entities
         /// <summary>
         /// 
         /// </summary>
-        public List<string> Double_damage_from { get; set; } = new List<string>();
+        public List<Types> Double_damage_from { get; set; } = new List<Types>();
 
         /// <summary>
         /// 
         /// </summary>
-        public List<string> Double_damage_to { get; set; } = new List<string>();
+        public List<Types> Double_damage_to { get; set; } = new List<Types>();
 
         /// <summary>
         /// 
         /// </summary>
-        public List<string> Half_damage_from { get; set; } = new List<string>();
+        public List<Types> Half_damage_from { get; set; } = new List<Types>();
 
         /// <summary>
         /// 
         /// </summary>
-        public List<string> No_damage_from { get; set; } = new List<string>();
+        public List<Types> No_damage_from { get; set; } = new List<Types>();
     }
 }

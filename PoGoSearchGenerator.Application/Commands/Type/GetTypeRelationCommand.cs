@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using PoGoSearchGenerator.Domain.Entities;
 using PoGoSearchGenerator.infrastructure.Efcore;
 using PoGoSearchGenerator.infrastructure.PokeApi;
@@ -36,7 +37,13 @@ namespace PoGoSearchGenerator.Application.Commands.Type
             if (!_context.Set<DamageRelation>().Any(x => x.Type == request.Type))
                 await new PokeApiTypeDamageRelations(_context).GatherGetDamageRelation(request.Type);
 
-            return _context.Set<DamageRelation>().Where(x => x.Type == request.Type).FirstOrDefault();
+            return _context.Set<DamageRelation>()
+                .Include(x => x.Double_damage_from)
+                .Include(x => x.Double_damage_to)
+                .Include(x => x.Half_damage_from)
+                .Include(x => x.No_damage_from)
+                .Where(x => x.Type == request.Type)
+                .FirstOrDefault();
         }
     }
 }

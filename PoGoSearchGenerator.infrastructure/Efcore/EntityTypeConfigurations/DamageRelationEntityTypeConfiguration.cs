@@ -13,6 +13,12 @@ namespace PoGoSearchGenerator.infrastructure.Efcore.EntityTypeConfigurations
         public void Configure(EntityTypeBuilder<DamageRelation> builder)
         {
             builder.HasKey(x => x.Id);
+
+            builder.HasMany(x => x.Double_damage_to).WithOne();
+            builder.HasMany(x => x.Double_damage_from).WithOne();
+            builder.HasMany(x => x.Half_damage_from).WithOne();
+            builder.HasMany(x => x.No_damage_from).WithOne();
+
         }
     }
 
