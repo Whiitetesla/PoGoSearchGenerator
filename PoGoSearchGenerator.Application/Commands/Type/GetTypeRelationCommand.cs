@@ -25,6 +25,9 @@ namespace PoGoSearchGenerator.Application.Commands.Type
     public class GetTypeRelationCommandHandler
         : IRequestHandler<GetTypeRelationCommand, DamageRelation>
     {
+        /// <summary>
+        /// <see cref="ApplicationDbContext"/> to use
+        /// </summary>
         private readonly ApplicationDbContext _context;
 
         public GetTypeRelationCommandHandler(ApplicationDbContext context)
@@ -34,9 +37,12 @@ namespace PoGoSearchGenerator.Application.Commands.Type
 
         public async Task<DamageRelation> Handle(GetTypeRelationCommand request, CancellationToken cancellationToken)
         {
+            //check if we have a damageRelation with the type we search for
             if (!_context.Set<DamageRelation>().Any(x => x.Type == request.Type))
+                //if not we all api for the information
                 await new PokeApiTypeDamageRelations(_context).GatherGetDamageRelation(request.Type);
 
+            //return damageRelation from db and include all it's lists
             return _context.Set<DamageRelation>()
                 .Include(x => x.Double_damage_from)
                 .Include(x => x.Double_damage_to)

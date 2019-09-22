@@ -18,6 +18,9 @@ namespace PoGoSearchGenerator.Application.Commands.Type
     public class GetTypesCommandHandler
         : IRequestHandler<GetTypesCommand, List<string>>
     {
+        /// <summary>
+        /// <see cref="ApplicationDbContext"/> to use
+        /// </summary>
         private readonly ApplicationDbContext _context;
 
         public GetTypesCommandHandler(ApplicationDbContext context)
@@ -27,9 +30,12 @@ namespace PoGoSearchGenerator.Application.Commands.Type
 
         public async Task<List<string>> Handle(GetTypesCommand request, CancellationToken cancellationToken)
         {
+            //check if there are any types in the database 
             if (!_context.Set<Types>().Any())
+                //if not we call api for a list
                 await new PokeApiTypeGather(_context).GatherTypeListAsync();
 
+            //return a list of all types names
             return _context.Set<Types>().Select(x => x.Name).ToList();
         }
     }

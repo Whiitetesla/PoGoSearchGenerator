@@ -21,13 +21,15 @@ namespace PoGoSearchGenerator.infrastructure.PokeApi
         
         public async System.Threading.Tasks.Task GatherGetDamageRelation(string type)
         {
-            if (!_context.Set<Types>().Any())
+            //check if we have the type we search for in the db
+            if (!_context.Set<Types>().Any(x => x.Name == type))
                 await new PokeApiTypeGather(_context).GatherTypeListAsync();
 
             HttpClient client = new HttpClient();
             HttpResponseMessage response = await client.GetAsync($"https://pokeapi.co/api/v2/type/{type}");
             if (response.IsSuccessStatusCode)
             {
+                //create a model from the dto
                 var jsonString = await response.Content.ReadAsStringAsync();
                 var model = JsonConvert.DeserializeObject<PokeApiTypeDamageRelationDto>(jsonString);
 
@@ -78,8 +80,8 @@ namespace PoGoSearchGenerator.infrastructure.PokeApi
                             }))
                         .ToList();
 
+                //save data to db
                 _context.Set<DamageRelation>().Add(damageRelation);
-
                 await _context.SaveChangesAsync();
             }
         }

@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PoGoSearchGenerator.Application.Commands.Type;
+using PoGoSearchGenerator.Domain.Dto;
 
 namespace PoGoSearchGeneratorApi.Controllers
 {
@@ -43,6 +44,13 @@ namespace PoGoSearchGeneratorApi.Controllers
                 return new NotFoundResult();
 
             return new OkObjectResult(result);
+        }
+
+        // POST api/values
+        [HttpPost]
+        public async Task<ActionResult<string>> PostAsync([FromBody] TypeCounterDto value)
+        {
+            return await _mediator.Send(new GetTypeCounterStringCommand(value));
         }
     }
 }
