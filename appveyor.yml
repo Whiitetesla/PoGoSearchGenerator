@@ -8,6 +8,7 @@ install:
 - npm --version
 - npm install newman
 before_build:
+- node_modules/.bin/newman --version
 - ps: dotnet restore --verbosity m
 - ps: nuget restore
 build:
