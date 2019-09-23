@@ -12,7 +12,7 @@ namespace PoGoSearchGeneratorApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new OkObjectResult("");
+            return new OkObjectResult("Value");
         }
     }
 }
