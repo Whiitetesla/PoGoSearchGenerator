@@ -23,7 +23,8 @@ namespace PoGoSearchGenerator.infrastructure.PokeApi
         {
             //check if we have the type we search for in the db
             if (!_context.Set<Types>().Any(x => x.Name == type))
-                await new PokeApiTypeGather(_context).GatherTypeListAsync();
+                if (!await new PokeApiTypeGather(_context).GatherTypeListAsync())
+                    return false;
 
             using (HttpClient client = new HttpClient())
             {
@@ -44,30 +45,30 @@ namespace PoGoSearchGenerator.infrastructure.PokeApi
                 //moves all the lists to our new damageRelation
                 damageRelation.Double_damage_from 
                     = model.Damage_relations.Double_damage_from
-                    .Select(x => new Types()
+                    .Select(x => new TypeDamageRelation()
                     {
-                        Name = x.Name
+                        TypesId = _context.Set<Types>().FirstOrDefault(y => y.Name == x.Name).Id
                     }).ToList();
 
                 damageRelation.Double_damage_to
                     = model.Damage_relations.Double_damage_to
-                    .Select(x => new Types()
+                    .Select(x => new TypeDamageRelation()
                     {
-                        Name = x.Name
+                        TypesId = _context.Set<Types>().FirstOrDefault(y => y.Name == x.Name).Id
                     }).ToList();
 
                 damageRelation.Half_damage_from
                     = model.Damage_relations.Half_damage_from
-                    .Select(x => new Types()
+                    .Select(x => new TypeDamageRelation()
                     {
-                        Name = x.Name
+                        TypesId = _context.Set<Types>().FirstOrDefault(y => y.Name == x.Name).Id
                     }).ToList();
 
                 damageRelation.No_damage_from 
                     = model.Damage_relations.No_damage_from
-                    .Select(x => new Types()
+                    .Select(x => new TypeDamageRelation()
                     {
-                        Name = x.Name
+                        TypesId = _context.Set<Types>().FirstOrDefault(y => y.Name == x.Name).Id
                     }).ToList();
 
                 //save data to db

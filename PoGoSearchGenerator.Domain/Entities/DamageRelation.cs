@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace PoGoSearchGenerator.Domain.Entities
@@ -19,21 +20,25 @@ namespace PoGoSearchGenerator.Domain.Entities
         /// <summary>
         /// 
         /// </summary>
-        public List<Types> Double_damage_from { get; set; } = new List<Types>();
+        [InverseProperty("DoubleFrom")]
+        public List<TypeDamageRelation> Double_damage_from { get; set; } = new List<TypeDamageRelation>();
 
         /// <summary>
         /// 
         /// </summary>
-        public List<Types> Double_damage_to { get; set; } = new List<Types>();
+        [InverseProperty("DoubleTo")]
+        public List<TypeDamageRelation> Double_damage_to { get; set; } = new List<TypeDamageRelation>();
 
         /// <summary>
         /// 
         /// </summary>
-        public List<Types> Half_damage_from { get; set; } = new List<Types>();
+        [InverseProperty("HalfFrom")]
+        public List<TypeDamageRelation> Half_damage_from { get; set; } = new List<TypeDamageRelation>();
 
         /// <summary>
         /// 
         /// </summary>
-        public List<Types> No_damage_from { get; set; } = new List<Types>();
+        [InverseProperty("NoFrom")]
+        public List<TypeDamageRelation> No_damage_from { get; set; } = new List<TypeDamageRelation>();
     }
 }

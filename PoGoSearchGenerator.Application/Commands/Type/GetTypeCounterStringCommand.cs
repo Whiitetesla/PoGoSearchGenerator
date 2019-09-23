@@ -60,60 +60,68 @@ namespace PoGoSearchGenerator.Application.Commands.Type
             var damageScores = new List<DamageRelationScore>();
             var double_damage_from_score = 1.6;
             var half_damage_from_score = 0.6;
-            var no_damage_from_score = 0.3;
-
+            var no_damage_from_score = 0;
 
             foreach (var damageRelation in damageRelations)
             {
                 foreach (var obj in damageRelation.Double_damage_from)
                 {
-                    if (damageScores.Any(x => x.Name == obj.Name))
-                        damageScores.FirstOrDefault(x => x.Name == obj.Name).Score *= double_damage_from_score;
+                    if (damageScores.Any(x => x.Name == obj.Types.Name))
+                        damageScores.FirstOrDefault(x => x.Name == obj.Types.Name).Score *= double_damage_from_score;
 
                     else
                         damageScores.Add(new DamageRelationScore()
                         {
-                            Name = obj.Name,
+                            Name = obj.Types.Name,
                             Score = double_damage_from_score
                         });
                 }
 
                 foreach (var obj in damageRelation.Half_damage_from)
                 {
-                    if (damageScores.Any(x => x.Name == obj.Name))
-                        damageScores.FirstOrDefault(x => x.Name == obj.Name).Score *= half_damage_from_score;
+                    if (damageScores.Any(x => x.Name == obj.Types.Name))
+                        damageScores.FirstOrDefault(x => x.Name == obj.Types.Name).Score *= half_damage_from_score;
 
                     else
                         damageScores.Add(new DamageRelationScore()
                         {
-                            Name = obj.Name,
+                            Name = obj.Types.Name,
                             Score = half_damage_from_score
                         });
                 }
 
                 foreach (var obj in damageRelation.No_damage_from)
                 {
-                    if (damageScores.Any(x => x.Name == obj.Name))
-                        damageScores.FirstOrDefault(x => x.Name == obj.Name).Score *= no_damage_from_score;
+                    if (damageScores.Any(x => x.Name == obj.Types.Name))
+                        damageScores.FirstOrDefault(x => x.Name == obj.Types.Name).Score *= no_damage_from_score;
 
                     else
                         damageScores.Add(new DamageRelationScore()
                         {
-                            Name = obj.Name,
+                            Name = obj.Types.Name,
                             Score = no_damage_from_score
                         });
                 }
 
             }
 
-            //create new clas for damage claculation
-            //Double_damage_from = 1.6
-            //Half_damage_from = 0.6
-            //No_damage_from = 0.3
+            var returnStr = "";
+
+            if (request.TypeConter.Stab)
+            {
+                returnStr += damageScores.First(x => x.Score > 1.5).Name;
+
+                foreach (var type in damageScores)
+                {
+                    if (type.Score > 1.5 && type != damageScores.First(x => x.Score > 1.5))
+                        returnStr += $",{type.Name}";
+                }
+            }
+
             //add of same type together in class prop
             //return all with damage number above 1.5
 
-            return null;
+            return returnStr;
         }
         
     }

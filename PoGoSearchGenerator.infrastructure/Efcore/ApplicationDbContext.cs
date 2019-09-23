@@ -17,6 +17,7 @@ namespace PoGoSearchGenerator.infrastructure.Efcore
         {
             modelBuilder.ApplyConfiguration(new TypeEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new DamageRelationEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new TypeDamageRelationEntityTypeConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }

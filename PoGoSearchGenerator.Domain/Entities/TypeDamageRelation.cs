@@ -12,8 +12,12 @@ namespace PoGoSearchGenerator.Domain.Entities
 
         public Types Types { get; set; }
 
-        public int DamageRelationId { get; set; }
+        public DamageRelation DoubleFrom { get; set; }
 
-        public DamageRelation DamageRelation { get; set; }
+        public DamageRelation DoubleTo { get; set; }
+
+        public DamageRelation HalfFrom { get; set; }
+
+        public DamageRelation NoFrom { get; set; }
     }
 }

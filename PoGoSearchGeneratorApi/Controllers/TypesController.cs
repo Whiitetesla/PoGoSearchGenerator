@@ -35,21 +35,10 @@ namespace PoGoSearchGeneratorApi.Controllers
             return new OkObjectResult(result);
         }
 
-        [HttpGet("{type}")]
-        public async Task<ActionResult<string>> GetAsync(string type)
-        {
-            var result = await _mediator.Send(new GetTypeRelationCommand(type));
-
-            if (result == null)
-                return new NotFoundResult();
-
-            return new OkObjectResult(result);
-        }
-
         [HttpPost]
         public async Task<ActionResult<string>> PostAsync([FromBody] TypeCounterDto value)
         {
-            return await _mediator.Send(new GetTypeCounterStringCommand(value));
+            return new OkObjectResult(await _mediator.Send(new GetTypeCounterStringCommand(value)));
         }
     }
 }
