@@ -26,7 +26,7 @@ for:
   test_script:
     - dotnet test "C:\projects\pogosearchgeneratorapi\PoGoSearchGenerator.xUnitTest\PoGoSearchGenerator.xUnitTest.csproj" --configuration Debug --no-build
     - ps: cd PoGoSearchGeneratorApi
-    - ps: $ServerProcess = Start-Process dotnet -ArgumentList "run","--urls=http://localhost:44396/" -PassThru
+    - ps: $ServerProcess = Start-Process dotnet -ArgumentList "run","--urls=http://localhost:5001/" -PassThru
     - ps: cd ../
     - node_modules/.bin/newman run PoGoSearchGenerator.PostmanTest/PoGoSearchGeneratorApi.postman_collection.json
     - cd ../

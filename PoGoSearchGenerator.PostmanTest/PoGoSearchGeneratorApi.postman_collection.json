@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "https://localhost:44396/api/values",
+			"name": "https://localhost:5001/api/values",
 			"event": [
 				{
 					"listen": "test",
@@ -25,12 +25,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:44396/api/values",
+					"raw": "http://localhost:5001/api/values",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "44396",
+					"port": "5001",
 					"path": [
 						"api",
 						"values"
