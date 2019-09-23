@@ -21,7 +21,6 @@ test_script:
   - ps: cd ../
   - node_modules/.bin/newman run PoGoSearchGenerator.PostmanTest/PoGoSearchGeneratorApi.postman_collection.json
   - cd ../
-  
 artifacts:
 - path: '\PoGoSearchGeneratorApi\bin\Release\netcoreapp2.1\publish'
   name: WebSite
@@ -51,6 +50,5 @@ deploy:
   aspnet_core_force_restart: true
   on:
     branch: development
-    
 on_finish:
   - ps: $ServerProcess.closeMainWindow()
