@@ -16,24 +16,12 @@ after_build:
 - cmd: dotnet publish -c Release
 test_script:
   - dotnet test "C:\projects\pogosearchgeneratorapi\PoGoSearchGenerator.xUnitTest\PoGoSearchGenerator.xUnitTest.csproj" --configuration Debug --no-build
-
-for:
-- branches:
-    only:
-      - master
-      - development
-      
-  test_script:
-    - dotnet test "C:\projects\pogosearchgeneratorapi\PoGoSearchGenerator.xUnitTest\PoGoSearchGenerator.xUnitTest.csproj" --configuration Debug --no-build
-    - ps: cd PoGoSearchGeneratorApi
-    - ps: $ServerProcess = Start-Process dotnet -ArgumentList "run","--urls=http://localhost:5001/" -PassThru
-    - ps: cd ../
-    - node_modules/.bin/newman run PoGoSearchGenerator.PostmanTest/PoGoSearchGeneratorApi.postman_collection.json
-    - cd ../
-    
-  on_finish:
-    - ps: $ServerProcess.closeMainWindow()
-
+  - dotnet test "C:\projects\pogosearchgeneratorapi\PoGoSearchGenerator.xUnitTest\PoGoSearchGenerator.xUnitTest.csproj" --configuration Debug --no-build
+  - ps: cd PoGoSearchGeneratorApi
+  - ps: $ServerProcess = Start-Process dotnet -ArgumentList "run","--urls=http://localhost:5001/" -PassThru
+  - ps: cd ../
+  - node_modules/.bin/newman run PoGoSearchGenerator.PostmanTest/PoGoSearchGeneratorApi.postman_collection.json
+  - cd ../
 artifacts:
 - path: '\PoGoSearchGeneratorApi\bin\Release\netcoreapp2.1\publish'
   name: WebSite
@@ -63,3 +51,6 @@ deploy:
   aspnet_core_force_restart: true
   on:
     branch: development
+    
+  on_finish:
+    - ps: $ServerProcess.closeMainWindow()
