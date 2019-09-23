@@ -52,5 +52,5 @@ deploy:
   on:
     branch: development
     
-  on_finish:
-    - ps: $ServerProcess.closeMainWindow()
+on_finish:
+  - ps: $ServerProcess.closeMainWindow()
