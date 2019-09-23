@@ -46,7 +46,6 @@ namespace PoGoSearchGeneratorApi.Controllers
             return new OkObjectResult(result);
         }
 
-        // POST api/values
         [HttpPost]
         public async Task<ActionResult<string>> PostAsync([FromBody] TypeCounterDto value)
         {
