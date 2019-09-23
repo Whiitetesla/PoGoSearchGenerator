@@ -14,30 +14,5 @@ namespace PoGoSearchGeneratorApi.Controllers
         {
             return new OkObjectResult("");
         }
-
-        // GET api/values/5
-        [HttpGet("{type}")]
-        public ActionResult<string> Get(string type)
-        {
-            return new NotFoundResult();
-        }
-
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
