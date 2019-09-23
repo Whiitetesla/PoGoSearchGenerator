@@ -39,8 +39,11 @@ namespace PoGoSearchGenerator.Application.Commands.Type
         {
             //check if we have a damageRelation with the type we search for
             if (!_context.Set<DamageRelation>().Any(x => x.Type == request.Type))
+            {
                 //if not we all api for the information
-                await new PokeApiTypeDamageRelations(_context).GatherGetDamageRelation(request.Type);
+                if(!await new PokeApiTypeDamageRelations(_context).GatherGetDamageRelation(request.Type))
+                    return null;
+            }
 
             //return damageRelation from db and include all it's lists
             return _context.Set<DamageRelation>()

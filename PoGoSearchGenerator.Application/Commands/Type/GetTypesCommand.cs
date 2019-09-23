@@ -32,8 +32,11 @@ namespace PoGoSearchGenerator.Application.Commands.Type
         {
             //check if there are any types in the database 
             if (!_context.Set<Types>().Any())
+            {
                 //if not we call api for a list
-                await new PokeApiTypeGather(_context).GatherTypeListAsync();
+                if (!await new PokeApiTypeGather(_context).GatherTypeListAsync())
+                    return null;
+            }
 
             //return a list of all types names
             return _context.Set<Types>().Select(x => x.Name).ToList();

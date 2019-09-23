@@ -19,15 +19,17 @@ namespace PoGoSearchGenerator.infrastructure.PokeApi
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
         
-        public async System.Threading.Tasks.Task GatherTypeListAsync()
+        public async System.Threading.Tasks.Task<bool> GatherTypeListAsync()
         {
             List<Types> TempTypes = new List<Types>();
-            
+
             //call api for list of all types
-            HttpClient client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync("https://pokeapi.co/api/v2/type");
-            if (response.IsSuccessStatusCode)
+            using (HttpClient client = new HttpClient())
             {
+                HttpResponseMessage response = await client.GetAsync("https://pokeapi.co/api/v2/type");
+                if (!response.IsSuccessStatusCode)
+                    return false;
+
                 //create a model from the dto
                 var jsonString = await response.Content.ReadAsStringAsync();
                 var model = JsonConvert.DeserializeObject<PokeApiTypeListDto>(jsonString);
@@ -40,13 +42,15 @@ namespace PoGoSearchGenerator.infrastructure.PokeApi
                     if (obj.Name != "unknown" && obj.Name != "shadow")
                         TempTypes.Add(new Types()
                         {
-                           Name = obj.Name
+                            Name = obj.Name
                         });
                 }
 
                 //saves types
                 _context.Set<Types>().AddRange(TempTypes);
                 await _context.SaveChangesAsync();
+
+                return true;
             }
         }
     }
