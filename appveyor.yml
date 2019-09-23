@@ -20,7 +20,6 @@ test_script:
   - ps: $ServerProcess = Start-Process dotnet -ArgumentList "run","--urls=http://localhost:5001/" -PassThru
   - ps: cd ../
   - node_modules/.bin/newman run PoGoSearchGenerator.PostmanTest/PoGoSearchGeneratorApi.postman_collection.json
-  - cd ../
 artifacts:
 - path: '\PoGoSearchGeneratorApi\bin\Release\netcoreapp2.1\publish'
   name: WebSite
