@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoGoSearchGeneratorApi", "PoGoSearchGeneratorApi\PoGoSearchGeneratorApi.csproj", "{AEBE2CA5-E456-4BD7-BC37-DAA8598B62D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoGoSearchGeneratorApi", "PoGoSearchGeneratorApi\PoGoSearchGeneratorApi.csproj", "{AEBE2CA5-E456-4BD7-BC37-DAA8598B62D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoGoSearchGenerator.xUnitTest", "PoGoSearchGenerator.xUnitTest\PoGoSearchGenerator.xUnitTest.csproj", "{DA9373A5-D10D-484C-8340-663467E928D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PoGoSearchGenerator.xUnitTest", "PoGoSearchGenerator.xUnitTest\PoGoSearchGenerator.xUnitTest.csproj", "{DA9373A5-D10D-484C-8340-663467E928D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoGoSearchGenerator.Domain", "PoGoSearchGenerator.Domain\PoGoSearchGenerator.Domain.csproj", "{220490C9-77AF-4CEA-B11F-1583ED735C43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoGoSearchGenerator.infrastructure", "PoGoSearchGenerator.infrastructure\PoGoSearchGenerator.infrastructure.csproj", "{2896FD07-0E1E-4240-95BF-B46F40D0C081}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoGoSearchGenerator.Application", "PoGoSearchGenerator.Application\PoGoSearchGenerator.Application.csproj", "{A174AD88-58E6-40B9-8C71-48CDB8901909}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{DA9373A5-D10D-484C-8340-663467E928D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA9373A5-D10D-484C-8340-663467E928D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA9373A5-D10D-484C-8340-663467E928D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{220490C9-77AF-4CEA-B11F-1583ED735C43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{220490C9-77AF-4CEA-B11F-1583ED735C43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{220490C9-77AF-4CEA-B11F-1583ED735C43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{220490C9-77AF-4CEA-B11F-1583ED735C43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2896FD07-0E1E-4240-95BF-B46F40D0C081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2896FD07-0E1E-4240-95BF-B46F40D0C081}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2896FD07-0E1E-4240-95BF-B46F40D0C081}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2896FD07-0E1E-4240-95BF-B46F40D0C081}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A174AD88-58E6-40B9-8C71-48CDB8901909}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A174AD88-58E6-40B9-8C71-48CDB8901909}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A174AD88-58E6-40B9-8C71-48CDB8901909}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A174AD88-58E6-40B9-8C71-48CDB8901909}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

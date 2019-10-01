@@ -8,6 +8,7 @@ install:
 - npm --version
 - npm install newman
 before_build:
+- node_modules/.bin/newman --version
 - ps: dotnet restore --verbosity m
 - ps: nuget restore
 build:
@@ -15,12 +16,11 @@ build:
 after_build:
 - cmd: dotnet publish -c Release
 test_script:
-  - dotnet test "C:\projects\pogosearchgeneratorapi\PoGoSearchGenerator.xUnitTest\PoGoSearchGenerator.xUnitTest.csproj" --configuration Debug --no-build
   - ps: cd PoGoSearchGeneratorApi
-  - ps: $ServerProcess = Start-Process dotnet -ArgumentList "run","--urls=http://localhost:44396/" -PassThru
+  - ps: $ServerProcess = Start-Process dotnet -ArgumentList "run","--urls=http://localhost:5001/" -PassThru
   - ps: cd ../
+  - dotnet test "C:\projects\pogosearchgeneratorapi\PoGoSearchGenerator.xUnitTest\PoGoSearchGenerator.xUnitTest.csproj" --configuration Debug --no-build
   - node_modules/.bin/newman run PoGoSearchGenerator.PostmanTest/PoGoSearchGeneratorApi.postman_collection.json
-  - cd ../
 artifacts:
 - path: '\PoGoSearchGeneratorApi\bin\Release\netcoreapp2.1\publish'
   name: WebSite
