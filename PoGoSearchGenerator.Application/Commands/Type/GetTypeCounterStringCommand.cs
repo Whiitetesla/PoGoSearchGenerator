@@ -7,7 +7,6 @@ using PoGoSearchGenerator.infrastructure.PokeApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,7 +14,7 @@ namespace PoGoSearchGenerator.Application.Commands.Type
 {
     public class GetTypeCounterStringCommand : IRequest<string>
     {
-        public TypeCounterDto TypeConter{ get; set; }
+        public TypeCounterDto TypeConter { get; set; }
 
         public GetTypeCounterStringCommand(TypeCounterDto typeConter)
         {
@@ -42,13 +41,17 @@ namespace PoGoSearchGenerator.Application.Commands.Type
             {
                 //check if we have a damageRelation with the type we search for
                 if (!_context.Set<DamageRelation>().Any(x => x.Type == type))
+                {
                     //if not we all api for the information
                     if (!await new PokeApiTypeDamageRelations(_context).GatherGetDamageRelation(type))
+                    {
                         return null;
+                    }
+                }
             }
 
             //gahter all damageRelation we need from the db
-            var damageRelations = 
+            var damageRelations =
                 _context.Set<DamageRelation>()
                 .Include(x => x.Double_damage_from)
                 .Include(x => x.Double_damage_to)
@@ -72,51 +75,66 @@ namespace PoGoSearchGenerator.Application.Commands.Type
                 {
                     var type = _context.Set<Types>().Find(obj.TypesId);
                     if (type == null)
+                    {
                         continue;
+                    }
 
                     if (damageScores.Any(x => x.Name == type.Name))
+                    {
                         damageScores.FirstOrDefault(x => x.Name == type.Name).Score *= double_damage_from_score;
-
+                    }
                     else
+                    {
                         damageScores.Add(new DamageRelationScore()
                         {
                             Name = type.Name,
                             Score = double_damage_from_score
                         });
+                    }
                 }
 
                 foreach (var obj in damageRelation.Half_damage_from)
                 {
                     var type = _context.Set<Types>().Find(obj.TypesId);
                     if (type == null)
+                    {
                         continue;
+                    }
 
                     if (damageScores.Any(x => x.Name == type.Name))
+                    {
                         damageScores.FirstOrDefault(x => x.Name == type.Name).Score *= half_damage_from_score;
-
+                    }
                     else
+                    {
                         damageScores.Add(new DamageRelationScore()
                         {
                             Name = type.Name,
                             Score = half_damage_from_score
                         });
+                    }
                 }
 
                 foreach (var obj in damageRelation.No_damage_from)
                 {
                     var type = _context.Set<Types>().Find(obj.TypesId);
                     if (type == null)
+                    {
                         continue;
+                    }
 
                     if (damageScores.Any(x => x.Name == type.Name))
+                    {
                         damageScores.FirstOrDefault(x => x.Name == type.Name).Score *= no_damage_from_score;
-
+                    }
                     else
+                    {
                         damageScores.Add(new DamageRelationScore()
                         {
                             Name = type.Name,
                             Score = no_damage_from_score
                         });
+                    }
                 }
 
             }
@@ -129,7 +147,9 @@ namespace PoGoSearchGenerator.Application.Commands.Type
 
             //change the minimum score to only coun't double "super effectives"
             if (request.TypeConter.DoubleSuper)
+            {
                 powerMin = 2.5;
+            }
 
             //get the first type from the list that has a score more than our powerMin
             var firstSuper = damageScores.FirstOrDefault(x => x.Score > powerMin);
@@ -161,9 +181,13 @@ namespace PoGoSearchGenerator.Application.Commands.Type
 
                 //use the AttackRelation to determan if we need to use & or ,
                 if (request.TypeConter.AttackRelation)
+                {
                     returnStr += "&";
+                }
                 else
+                {
                     returnStr += ",";
+                }
 
                 //setup for charged and extra moves
                 returnStr += $"@2{firstSuper.Name},@3{firstSuper.Name}";
@@ -192,10 +216,14 @@ namespace PoGoSearchGenerator.Application.Commands.Type
                     {
                         var type = _context.Set<Types>().Find(typeRelation.TypesId);
                         if (type == null)
+                        {
                             continue;
+                        }
 
                         if (!typeNames.Any(x => x == type.Name))
+                        {
                             typeNames.Add(type.Name);
+                        }
                     }
                 }
 
@@ -211,7 +239,7 @@ namespace PoGoSearchGenerator.Application.Commands.Type
             {
                 var firstWeak = damageScores.FirstOrDefault(x => x.Score < 0.7);
 
-                if(firstWeak != null)
+                if (firstWeak != null)
                 {
                     //setup for all fast attacks
                     returnStr += $"&!@1{firstWeak.Name}&!@2{firstWeak.Name}&!@3{firstWeak.Name}";
@@ -225,7 +253,7 @@ namespace PoGoSearchGenerator.Application.Commands.Type
 
             return returnStr;
         }
-        
+
     }
 
     public class DamageRelationScore

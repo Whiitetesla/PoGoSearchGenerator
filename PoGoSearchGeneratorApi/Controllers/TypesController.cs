@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MediatR;
-using Microsoft.AspNetCore.Http;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PoGoSearchGenerator.Application.Commands.Type;
 using PoGoSearchGenerator.Domain.Dto;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PoGoSearchGeneratorApi.Controllers
 {
@@ -30,7 +29,9 @@ namespace PoGoSearchGeneratorApi.Controllers
             var result = await _mediator.Send(new GetTypesCommand());
 
             if (result == null || !result.Any())
+            {
                 return new NotFoundResult();
+            }
 
             return new OkObjectResult(result);
         }

@@ -5,7 +5,6 @@ using PoGoSearchGenerator.infrastructure.PokeApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -35,7 +34,9 @@ namespace PoGoSearchGenerator.Application.Commands.Type
             {
                 //if not we call api for a list
                 if (!await new PokeApiTypeGather(_context).GatherTypeListAsync())
+                {
                     return null;
+                }
             }
 
             //return a list of all types names

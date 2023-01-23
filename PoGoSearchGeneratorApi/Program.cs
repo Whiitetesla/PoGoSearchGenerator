@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace PoGoSearchGeneratorApi
 {
@@ -21,9 +15,11 @@ namespace PoGoSearchGeneratorApi
             CreateWebHostBuilder(args, configuration).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args, IConfiguration configuration) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseConfiguration(configuration)
-                .UseStartup<Startup>();
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args, IConfiguration configuration)
+        {
+            return WebHost.CreateDefaultBuilder(args)
+.UseConfiguration(configuration)
+.UseStartup<Startup>();
+        }
     }
 }

@@ -4,9 +4,7 @@ using PoGoSearchGenerator.infrastructure.Efcore;
 using PoGoSearchGenerator.infrastructure.PokeApi.Dto;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 
 namespace PoGoSearchGenerator.infrastructure.PokeApi
 {
@@ -18,17 +16,19 @@ namespace PoGoSearchGenerator.infrastructure.PokeApi
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
-        
+
         public async System.Threading.Tasks.Task<bool> GatherTypeListAsync()
         {
-            List<Types> TempTypes = new List<Types>();
+            var TempTypes = new List<Types>();
 
             //call api for list of all types
-            using (HttpClient client = new HttpClient())
+            using (var client = new HttpClient())
             {
-                HttpResponseMessage response = await client.GetAsync("https://pokeapi.co/api/v2/type");
+                var response = await client.GetAsync("https://pokeapi.co/api/v2/type");
                 if (!response.IsSuccessStatusCode)
+                {
                     return false;
+                }
 
                 //create a model from the dto
                 var jsonString = await response.Content.ReadAsStringAsync();
@@ -40,10 +40,12 @@ namespace PoGoSearchGenerator.infrastructure.PokeApi
                     //ingores unkown and shadown types
                     //sinces they don't apear in GO
                     if (obj.Name != "unknown" && obj.Name != "shadow")
+                    {
                         TempTypes.Add(new Types()
                         {
                             Name = obj.Name
                         });
+                    }
                 }
 
                 //saves types

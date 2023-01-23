@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PoGoSearchGenerator.infrastructure.PokeApi.Dto
+﻿namespace PoGoSearchGenerator.infrastructure.PokeApi.Dto
 {
     public class PokeApiTypeListDto
     {

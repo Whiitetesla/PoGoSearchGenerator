@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PoGoSearchGenerator.infrastructure.Efcore.EntityTypeConfigurations;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PoGoSearchGenerator.infrastructure.Efcore
 {

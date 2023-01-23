@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PoGoSearchGenerator.Domain.Entities
+﻿namespace PoGoSearchGenerator.Domain.Entities
 {
     public class TypeDamageRelation
     {
